@@ -1,26 +1,585 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   Design tokens — dari ini-best-home-handoff/CLAUDE.md & design/*.html.
+   Jangan hardcode hex di komponen; pakai token / class di bawah.
+------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --dark-from: #1a140e;
+  --dark-to: #2a2016;
+  --footer: #120d08;
+  --ink: #1e1810;
+  --ink-2: #2a2016;
+  --gold: #e0c27a;
+  --gold-light: #ecd394;
+  --gold-mid: #c9a052;
+  --gold-deep: #a47a2e;
+  --gold-text: #7c5a1f;
+  --cream: #f8f3e8;
+  --sand: #f0e4cc;
+  --card: #fffdf8;
+  --card-white: #ffffff;
+  --card-soft: #fbf7ef;
+  --line: #e8dcc3;
+  --line-2: #eadfc8;
+  --muted-dark: #cfc2aa;
+  --muted-light: #5e5243;
+  --body-light: #3e352a;
+  --brick: #8e4a3a;
+  --sticker: #fffcf6;
+  --phone: #14100b;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-footer: var(--footer);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-mid: var(--gold-mid);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-text: var(--gold-text);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-card: var(--card);
+  --color-card-soft: var(--card-soft);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-muted-dark: var(--muted-dark);
+  --color-muted-light: var(--muted-light);
+  --color-body-light: var(--body-light);
+  --color-brick: var(--brick);
+
+  --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-poppins), system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ------------------------------ Base ------------------------------ */
+/* Preflight Tailwind menghapus garis bawah link; desain memakai default browser.
+   Ditaruh di @layer base supaya utility seperti no-underline tetap menang. */
+@layer base {
+  a {
+    text-decoration: underline;
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--dark-from);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+.legal {
+  background: var(--cream);
+  line-height: 1.7;
+}
+/* Desain memakai #A47A2E untuk link (3.5:1 di cream) → gold-text supaya lolos AA */
+a {
+  color: var(--gold-text);
+}
+a:hover {
+  color: var(--ink);
+}
+.legal a {
+  color: var(--gold-text);
+}
+.legal a:hover {
+  color: var(--ink);
+}
+a:focus-visible,
+summary:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+.legal a:focus-visible,
+.legal summary:focus-visible {
+  outline-color: var(--gold-deep);
+}
+[id] {
+  scroll-margin-top: 24px;
+}
+
+/* --------------------------- Layout ------------------------------- */
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 48px);
+  box-sizing: border-box;
+  position: relative;
+}
+.dark {
+  background: linear-gradient(160deg, var(--dark-from) 0%, var(--dark-to) 100%);
+  color: var(--cream);
+}
+.cream {
+  background: var(--cream);
+}
+.sand {
+  background: var(--sand);
+}
+.sec-pad {
+  padding: clamp(72px, 9vw, 112px) 0;
+}
+
+/* --------------------------- Tipografi ---------------------------- */
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  margin: 0;
+}
+.legal .serif {
+  line-height: 1.15;
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin: 0;
+}
+/* Frasa italic gold: .gi di bg gelap, .gd di bg terang */
+.gi {
+  font-style: italic;
+  color: var(--gold);
+}
+.gd {
+  font-style: italic;
+  color: var(--gold-deep);
+}
+.muted-d {
+  color: var(--muted-dark);
+}
+.muted-l {
+  color: var(--muted-light);
+}
+.h2-feature {
+  font-size: clamp(34px, 4.4vw, 52px);
+}
+
+/* ---------------------------- Tombol ------------------------------ */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 26px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-mid) 55%, var(--gold-deep) 100%);
+  color: var(--ink) !important;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.btn-gold:hover {
+  filter: brightness(1.05);
+}
+.btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 26px;
+  border-radius: 999px;
+  border: 1.5px solid rgb(224 194 122 / 0.6);
+  color: var(--cream) !important;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.btn-line:hover {
+  color: var(--gold) !important;
+}
+.store {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 20px 0 16px;
+  border-radius: 14px;
+  background: #000;
+  border: 1px solid rgb(224 194 122 / 0.35);
+  color: var(--cream) !important;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+.store:hover {
+  border-color: var(--gold);
+}
+/* App Store belum rilis: bukan link, tampil redup + pill "Soon" */
+.store-soon {
+  background: rgb(0 0 0 / 0.55);
+  border-style: dashed;
+  cursor: default;
+  padding-right: 14px;
+}
+.store-soon:hover {
+  border-color: rgb(224 194 122 / 0.35);
+}
+.soon-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-mid));
+  border-radius: 999px;
+  padding: 3px 9px;
+  margin-left: 4px;
+}
+.store small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted-dark);
+  line-height: 1.2;
+}
+.store b {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* --------------------------- Dekorasi ----------------------------- */
+.sticker {
+  position: absolute;
+  padding: 12px 18px;
+  border-radius: 16px;
+  background: var(--sticker);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 16px 34px rgb(0 0 0 / 0.28);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+.sticker small {
+  display: block;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--gold-text); /* desain: #A47A2E, dinaikkan kontrasnya */
+}
+.deco-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgb(224 194 122 / 0.22);
+  pointer-events: none;
+}
+.diamond {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  pointer-events: none;
+  opacity: 0.8;
+}
+.dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  pointer-events: none;
+}
+
+/* ------------------------- Phone mockup --------------------------- */
+.phone {
+  width: 270px;
+  height: 570px;
+  border-radius: 44px;
+  background: var(--phone);
+  padding: 9px;
+  box-sizing: border-box;
+  box-shadow:
+    0 30px 60px rgb(0 0 0 / 0.4),
+    inset 0 0 0 2px #3a2f22;
+  position: relative;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.phone .screen {
+  border-radius: 36px;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #fbf8f2;
+}
+.phone-sm {
+  width: 220px;
+  height: 460px;
+  border-radius: 36px;
+  padding: 8px;
+  box-shadow:
+    0 20px 40px rgb(30 24 16 / 0.22),
+    inset 0 0 0 2px #3a2f22;
+}
+.phone-sm .screen {
+  border-radius: 29px;
+}
+
+/* ---------------------------- Card -------------------------------- */
+.card {
+  background: var(--card);
+  border-radius: 22px;
+  padding: 28px;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+}
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gold-text);
+  background: #f6ebd8;
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.price {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px dashed #e3d5b8;
+  font-size: 14.5px;
+}
+.price:last-child {
+  border-bottom: none;
+}
+.price b {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+/* Forum post (testimoni) */
+.post {
+  background: #fff;
+  border: 1px solid #efe6d6;
+  border-radius: 18px;
+  padding: 20px 22px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 10px rgb(30 24 16 / 0.04);
+}
+.av {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #f6ebd8;
+  border: 1px solid #e6d3b1;
+  color: #8a6528;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.acts {
+  display: flex;
+  gap: 22px;
+  border-top: 1px solid #f1eadf;
+  padding-top: 10px;
+  color: #6b5e4e;
+  font-size: 13px;
+}
+.acts span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------------------------- Nav --------------------------------- */
+.navlink {
+  color: var(--cream) !important;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 4px;
+}
+.navlink:hover {
+  color: var(--gold) !important;
+}
+.flink {
+  color: var(--muted-dark) !important;
+  text-decoration: none;
+  font-size: 14px;
+}
+.flink:hover {
+  color: var(--gold) !important;
+}
+
+/* ---------------------------- Details ----------------------------- */
+details summary {
+  cursor: pointer;
+  list-style: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .plus {
+  transform: rotate(45deg);
+}
+details[open] .chev-flip {
+  transform: rotate(180deg);
+}
+.plus,
+.chev {
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+/* -------------------------- Halaman legal ------------------------- */
+.sec {
+  background: #fff;
+  border-radius: 22px;
+  padding: clamp(24px, 3.5vw, 40px);
+  border: 1px solid var(--line-2);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.sec p,
+.sec li {
+  margin: 0;
+  font-size: 15.5px;
+  color: var(--body-light);
+}
+.sec ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: disc; /* preflight Tailwind menghapus bullet */
+}
+.ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.toc a {
+  display: flex;
+  gap: 12px;
+  padding: 9px 0;
+  text-decoration: none;
+  color: var(--body-light);
+  font-size: 14.5px;
+  border-bottom: 1px solid var(--line-2);
+}
+.toc a:last-child {
+  border-bottom: none;
+}
+.toc a:hover {
+  color: var(--gold-text);
+}
+.toc span {
+  color: var(--gold-text);
+  font-weight: 600;
+  min-width: 18px;
+}
+.callout {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 18px;
+  font-size: 14.5px;
+  color: var(--body-light);
+}
+.use {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.use > div {
+  background: var(--card-soft);
+  border: 1px solid #efe4cf;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 14.5px;
+  color: var(--body-light);
+}
+.use b {
+  display: block;
+  color: var(--ink);
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+.grp {
+  background: var(--card-soft);
+  border: 1px solid #efe4cf;
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.grp b {
+  font-size: 15.5px;
+}
+.grp > span {
+  font-size: 14.5px;
+  color: var(--body-light);
+}
+.data-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  min-width: 420px;
+  font-size: 15px;
+}
+.data-table th {
+  text-align: left;
+  font-weight: 600;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 14px 18px;
+}
+.data-table th:first-child {
+  border-top-left-radius: 12px;
+}
+.data-table th:last-child {
+  border-top-right-radius: 12px;
+}
+.data-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line-2);
+  color: var(--body-light);
+  vertical-align: top;
+}
+.data-table tr:nth-child(even) td {
+  background: var(--card-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .plus,
+  .chev {
+    transition: none;
+  }
 }
