@@ -30,7 +30,7 @@ export function waLink(number: string, text?: string) {
   return `https://wa.me/${number}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 }
 
-export type DownloadPosition = "hero" | "services" | "mitra" | "cta" | "qr" | "footer";
+export type DownloadPosition = "hero" | "services" | "mitra" | "cta" | "sticky" | "footer";
 export type Store = "play" | "appstore";
 
 /** Semua tombol download lewat /download (app/download/route.ts) supaya UTM tercatat. */

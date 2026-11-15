@@ -2,11 +2,13 @@ import { forumPosts } from "@/content/landing";
 import { ForumPost } from "@/components/ui/ForumPost";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
+const cardW = { width: 340 } as const;
+
 export function Testimonials() {
   return (
     <section className="sand sec-pad">
       <div className="wrap flex flex-col" style={{ gap: 44 }}>
-        <div className="flex flex-wrap items-end justify-between gap-5">
+        <div className="reveal flex flex-wrap items-end justify-between gap-5">
           <SectionHeading
             tone="light"
             title={<>Cerita dari <em>Forum kami.</em></>}
@@ -17,13 +19,29 @@ export function Testimonials() {
             Pengalaman pengguna INI Best Home setelah sesi pijat di rumah.
           </p>
         </div>
-        <div
-          className="grid items-start"
-          style={{ gap: 18, gridTemplateColumns: "repeat(auto-fit, minmax(min(300px,100%), 1fr))" }}
-        >
+
+        {/* Mobile: carousel geser */}
+        <div className="md:hidden">
+        <div className="h-scroll" style={{ alignItems: "flex-start" }}>
           {forumPosts.map((p) => (
-            <ForumPost key={p.username} post={p} />
+            <div key={p.username} style={{ width: "min(82vw, 330px)" }}>
+              <ForumPost post={p} />
+            </div>
           ))}
+        </div>
+        </div>
+
+        {/* Tablet & desktop: marquee pelan, berhenti saat di-hover/fokus */}
+        <div className="marquee hidden md:block" style={{ margin: "0 calc(50% - 50vw)" }}>
+          <div className="marquee-track" style={{ alignItems: "flex-start", padding: "4px 0 8px" }}>
+            {[0, 1].map((copy) =>
+              forumPosts.map((p) => (
+                <div key={`${copy}-${p.username}`} style={cardW} aria-hidden={copy === 1 || undefined}>
+                  <ForumPost post={p} />
+                </div>
+              )),
+            )}
+          </div>
         </div>
       </div>
     </section>

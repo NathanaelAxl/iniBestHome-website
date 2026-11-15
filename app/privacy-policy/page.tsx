@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DataTable } from "@/components/legal/DataTable";
+import { LegalEnhancements, Toc } from "@/components/legal/LegalEnhancements";
 import { LegalHero } from "@/components/legal/LegalHero";
 import { PolicySection, SectionIcon } from "@/components/legal/PolicySection";
 import { LegalFooter } from "@/components/layout/Footer";
@@ -66,28 +67,15 @@ export default function PrivacyPolicyPage() {
 
       <main style={{ padding: "clamp(40px,6vw,72px) 0 clamp(64px,8vw,96px)" }}>
         <div className="wrap flex flex-wrap items-start" style={{ gap: 40 }}>
-          <aside className="min-w-0" style={{ flex: "1 1 260px" }}>
-            <details
-              open
-              style={{ background: "#fff", border: "1px solid var(--line-2)", borderRadius: 22, padding: "22px 26px" }}
+          <Toc items={toc}>
+            <summary
+              className="flex items-center justify-between"
+              style={{ fontWeight: 600, fontSize: 15, paddingBottom: 8 }}
             >
-              <summary
-                className="flex items-center justify-between"
-                style={{ fontWeight: 600, fontSize: 15, paddingBottom: 8 }}
-              >
-                Daftar isi
-                <ChevronDown size={18} className="chev text-gold-deep" />
-              </summary>
-              <nav className="toc flex flex-col" aria-label="Daftar isi">
-                {toc.map(([id, label], i) => (
-                  <a key={id} href={`#${id}`}>
-                    <span>{i + 1}</span>
-                    {label}
-                  </a>
-                ))}
-              </nav>
-            </details>
-          </aside>
+              Daftar isi
+              <ChevronDown size={18} className="chev text-gold-deep" />
+            </summary>
+          </Toc>
 
           <div className="flex min-w-0 flex-col" style={{ flex: "999 1 560px", gap: 18 }}>
             <PolicySection
@@ -372,6 +360,7 @@ export default function PrivacyPolicyPage() {
           { href: "/delete-account", label: "Hapus Akun" },
         ]}
       />
+      <LegalEnhancements />
     </div>
   );
 }

@@ -7,7 +7,8 @@ const fl = { lineHeight: 2.2 } as const;
 /** Footer lengkap untuk landing page. */
 export function LandingFooter() {
   return (
-    <footer style={{ background: "var(--footer)", color: "var(--cream)", padding: "64px 0 36px" }}>
+    // pb ekstra di mobile supaya copyright tidak tertutup bar download melayang
+    <footer className="pb-28 md:pb-9" style={{ background: "var(--footer)", color: "var(--cream)", paddingTop: 64 }}>
       <div className="wrap flex flex-col gap-12">
         <div className="flex flex-wrap justify-between" style={{ gap: "40px 64px" }}>
           <div className="flex flex-col" style={{ flex: "1 1 260px", gap: 14 }}>

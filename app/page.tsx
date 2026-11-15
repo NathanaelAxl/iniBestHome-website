@@ -9,6 +9,7 @@ import { Mitra } from "@/components/landing/Mitra";
 import { Services } from "@/components/landing/Services";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { TrustStrip } from "@/components/landing/TrustStrip";
+import { MobileDownloadBar } from "@/components/landing/MobileDownloadBar";
 import { LandingFooter } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { faqs } from "@/content/landing";
@@ -89,6 +90,7 @@ export default function Home() {
         <DownloadCta />
       </main>
       <LandingFooter />
+      <MobileDownloadBar />
     </>
   );
 }

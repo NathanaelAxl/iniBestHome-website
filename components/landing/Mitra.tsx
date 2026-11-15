@@ -20,7 +20,7 @@ export function Mitra() {
         >
           <RingAt size={560} style={{ right: -180, top: -200 }} />
           <RingAt size={380} style={{ right: -90, top: -110 }} />
-          <div className="relative flex min-w-0 flex-col gap-5" style={{ flex: "1 1 440px" }}>
+          <div className="reveal relative flex min-w-0 flex-col gap-5" style={{ flex: "1 1 440px" }}>
             <SectionHeading
               tone="dark"
               eyebrow="Jadi mitra terapis"
@@ -64,12 +64,10 @@ export function Mitra() {
               </a>
             </div>
           </div>
-          <div className="relative flex justify-center" style={{ flex: "0 1 290px" }}>
-            <PhoneMockup
-              src="/screens/status-mitra.jpg"
-              alt="Layar status pendaftaran mitra"
-              style={{ width: 250, height: 530 }}
-            />
+          <div className="reveal relative flex justify-center" style={{ flex: "0 1 290px" }}>
+            <div className="mitra-phone">
+              <PhoneMockup src="/screens/status-mitra.jpg" alt="Layar status pendaftaran mitra" />
+            </div>
           </div>
         </div>
       </div>

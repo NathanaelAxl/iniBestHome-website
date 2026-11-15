@@ -40,8 +40,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="id" className={`${playfair.variable} ${poppins.variable}`}>
       <body>
-        {/* Sama seperti desain: wrapper overflow hidden supaya lingkaran dekoratif tidak bikin scroll horizontal. */}
-        <div className="w-full overflow-hidden">{children}</div>
+        {/* overflow-x: clip (bukan hidden) supaya lingkaran dekoratif terpotong tapi header & daftar isi tetap bisa sticky. */}
+        <div className="w-full overflow-x-clip">{children}</div>
         <MetaPixel />
       </body>
     </html>

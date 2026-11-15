@@ -21,20 +21,22 @@ function FeatureRow({
   phone: ReactNode;
 }) {
   const textCol = (
-    <div className="flex min-w-0 flex-col gap-5" style={{ flex: "1 1 440px" }}>
+    <div className="reveal flex min-w-0 flex-col gap-5" style={{ flex: "1 1 440px" }}>
       {text}
     </div>
   );
   const phoneCol = (
-    <div className="relative flex justify-center" style={{ flex: "1 1 300px", padding: "20px 0" }}>
-      {phone}
+    <div className="reveal relative flex justify-center" style={{ flex: "1 1 300px", padding: "20px 0" }}>
+      <div className="feature-glow" aria-hidden />
+      {/* Parallax ringan: mockup + sticker bergerak sedikit lebih lambat dari teks saat di-scroll */}
+      <div className="parallax relative flex w-full justify-center">{phone}</div>
     </div>
   );
   return (
     <section id={id} className={`${tone} sec-pad relative`}>
       {/* Desain: mockup-kiri pakai wrap, mockup-kanan pakai wrap-reverse (di mobile mockup selalu di atas). */}
       <div
-        className="wrap flex items-center"
+        className="wrap feature-row flex items-center"
         style={{ gap: 64, flexWrap: phoneFirst ? "wrap" : "wrap-reverse" }}
       >
         {phoneFirst ? (
@@ -69,7 +71,7 @@ export function Features() {
               src="/screens/konfirmasi-pesanan.jpg"
               alt="Layar konfirmasi pemesanan dengan pilihan gender terapis"
             />
-            <Sticker variant="dark" pill tilt={-3} style={{ left: 0, bottom: "18%" }}>
+            <Sticker float variant="dark" pill tilt={-3} style={{ left: 0, bottom: "18%" }}>
               Pria, wanita, <span className="text-gold">Anda yang pilih</span>
             </Sticker>
           </>
@@ -148,7 +150,7 @@ export function Features() {
         phone={
           <>
             <PhoneMockup src="/screens/rincian-pembayaran.jpg" alt="Layar rincian pembayaran sebelum konfirmasi" />
-            <Sticker tilt={3} style={{ right: 0, top: "22%" }}>
+            <Sticker float tilt={3} style={{ right: 0, top: "22%" }}>
               Harga jelas, <span className="text-gold-text">tanpa kejutan</span>
             </Sticker>
           </>
@@ -184,7 +186,7 @@ export function Features() {
             <PhoneMockup>
               <ForumScreen />
             </PhoneMockup>
-            <Sticker tilt={3} style={{ right: "-2%", top: "26%" }}>
+            <Sticker float tilt={3} style={{ right: "-2%", top: "26%" }}>
               <StickerIcon bg="var(--brick)">
                 <HeartFill size={16} className="text-white" />
               </StickerIcon>

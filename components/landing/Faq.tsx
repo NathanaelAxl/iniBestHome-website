@@ -7,7 +7,7 @@ export function Faq() {
   return (
     <section id="bantuan" className="sand sec-pad">
       <div className="wrap flex flex-wrap gap-12">
-        <div className="flex flex-col" style={{ flex: "1 1 300px", gap: 14 }}>
+        <div className="reveal flex flex-col" style={{ flex: "1 1 300px", gap: 14 }}>
           <SectionHeading
             tone="light"
             eyebrow="Bantuan"

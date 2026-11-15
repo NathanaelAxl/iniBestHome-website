@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { DataTable } from "@/components/legal/DataTable";
+import { LegalEnhancements } from "@/components/legal/LegalEnhancements";
 import { LegalHero } from "@/components/legal/LegalHero";
 import { LegalFooter } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
@@ -474,6 +475,7 @@ export default function DeleteAccountPage() {
           { href: "#ajukan", label: "Ajukan Penghapusan" },
         ]}
       />
+      <LegalEnhancements />
     </div>
   );
 }

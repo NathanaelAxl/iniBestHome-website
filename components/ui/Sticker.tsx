@@ -5,18 +5,22 @@ const GOLD = "linear-gradient(135deg,#ECD394,#C9A052)";
 /**
  * Badge miring yang menempel di pinggir phone mockup.
  * variant: "white" (default), "gold" (gradient), "dark" (pill hitam).
- * pill: radius penuh & padding lebih lebar.
+ * pill: radius penuh & padding lebih lebar. float: melayang pelan (CSS, hormati reduced-motion).
  */
 export function Sticker({
   variant = "white",
   pill,
   tilt,
+  float,
+  floatDelay,
   style,
   children,
 }: {
   variant?: "white" | "gold" | "dark";
   pill?: boolean;
   tilt: number;
+  float?: boolean;
+  floatDelay?: boolean;
   style: CSSProperties;
   children: ReactNode;
 }) {
@@ -27,8 +31,12 @@ export function Sticker({
         ? { background: "var(--ink)", color: "var(--cream)" }
         : {};
   const p: CSSProperties = pill ? { borderRadius: 999, padding: "14px 22px" } : {};
+  const cls = ["sticker", float && "float", floatDelay && "float-delay"].filter(Boolean).join(" ");
   return (
-    <span className="sticker" style={{ transform: `rotate(${tilt}deg)`, ...v, ...p, ...style }}>
+    <span
+      className={cls}
+      style={{ "--tilt": `${tilt}deg`, transform: `rotate(${tilt}deg)`, ...v, ...p, ...style } as CSSProperties}
+    >
       {children}
     </span>
   );

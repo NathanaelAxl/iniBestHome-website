@@ -104,7 +104,7 @@ button:focus-visible {
   outline-color: var(--gold-deep);
 }
 [id] {
-  scroll-margin-top: 24px;
+  scroll-margin-top: 96px; /* tinggi header sticky + jarak */
 }
 
 /* --------------------------- Layout ------------------------------- */
@@ -581,5 +581,478 @@ details[open] .chev-flip {
   .plus,
   .chev {
     transition: none;
+  }
+}
+
+/* ==================================================================
+   Penyempurnaan visual (skala B). Semua animasi CSS, dimatikan oleh
+   prefers-reduced-motion di blok paling bawah.
+   ================================================================== */
+
+/* ---------- Header sticky ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition:
+    background-color 0.25s,
+    box-shadow 0.25s;
+}
+.site-header[data-scrolled="true"] {
+  background: #120d08;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.8);
+}
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgb(224 194 122 / 0.35);
+  color: var(--cream);
+  background: transparent;
+  cursor: pointer;
+}
+.mobile-menu {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.mobile-menu[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.mobile-menu > div {
+  overflow: hidden;
+}
+
+/* ---------- Bar download melayang (mobile) ---------- */
+.dl-bar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 10px 14px;
+  border-radius: 18px;
+  background: rgb(18 13 8 / 0.94);
+  border: 1px solid rgb(224 194 122 / 0.35);
+  box-shadow: 0 18px 40px -12px rgb(0 0 0 / 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: translateY(140%);
+  transition: transform 0.35s ease;
+}
+.dl-bar[data-show="true"] {
+  transform: none;
+}
+@media (min-width: 768px) {
+  .dl-bar {
+    display: none;
+  }
+}
+
+/* ---------- Fade-up heading & mockup (sekali, saat masuk layar) ---------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 55%;
+  }
+}
+
+/* ---------- Sticker melayang ---------- */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--tilt, 0deg));
+  }
+  50% {
+    transform: translateY(-7px) rotate(var(--tilt, 0deg));
+  }
+}
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+.float-delay {
+  animation-delay: -3s;
+}
+
+/* ---------- Hero: ornamen berputar pelan, HP berlapis ---------- */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.orbit {
+  position: absolute;
+  inset: 0;
+  animation: spin-slow 120s linear infinite;
+  pointer-events: none;
+}
+.phone-back {
+  position: absolute;
+  transform: translateX(-46%) rotate(-9deg) scale(0.86);
+  opacity: 0.92;
+  z-index: 0;
+}
+@media (max-width: 639px) {
+  .phone-back {
+    transform: translateX(-30%) rotate(-9deg) scale(0.8);
+  }
+}
+.hero-glow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  left: 50%;
+  top: 50%;
+  margin: -210px 0 0 -210px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(224 194 122 / 0.18), transparent 65%);
+  pointer-events: none;
+}
+
+/* ---------- Scroller horizontal ---------- */
+/* .h-scroll: selalu scroller. .h-scroll-m: scroller hanya di bawah 1024px (desktop pakai grid Tailwind). */
+.h-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: clamp(20px, 5vw, 48px);
+  padding: 4px clamp(20px, 5vw, 48px) 18px;
+  margin: 0 calc(-1 * clamp(20px, 5vw, 48px));
+  scrollbar-width: none;
+}
+.h-scroll::-webkit-scrollbar {
+  display: none;
+}
+.h-scroll > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+@media (max-width: 1023px) {
+  .h-scroll-m {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: clamp(20px, 5vw, 48px);
+    padding: 4px clamp(20px, 5vw, 48px) 18px;
+    margin: 0 calc(-1 * clamp(20px, 5vw, 48px));
+    scrollbar-width: none;
+  }
+  .h-scroll-m::-webkit-scrollbar {
+    display: none;
+  }
+  .h-scroll-m > * {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: min(82vw, 330px);
+  }
+}
+
+/* ---------- Kartu layanan ---------- */
+.svc-card {
+  overflow: hidden;
+  padding: 0 !important;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.svc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 40px -24px rgb(30 24 16 / 0.45);
+}
+.svc-img {
+  position: relative;
+  height: 128px;
+  overflow: hidden;
+}
+.svc-img img {
+  transition: transform 0.6s ease;
+}
+.svc-card:hover .svc-img img {
+  transform: scale(1.06);
+}
+.svc-chip {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--muted-light);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.svc-chip[aria-current="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--cream);
+}
+
+/* ---------- Tier member logam ---------- */
+.tier {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid rgb(224 194 122 / 0.3);
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.01));
+}
+.tier::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: var(--metal);
+}
+.tier-name {
+  font-size: 18px;
+  font-weight: 700;
+  background: var(--metal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.tier-medal {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--metal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  flex-shrink: 0;
+  box-shadow:
+    inset 0 -3px 6px rgb(0 0 0 / 0.25),
+    0 6px 16px -6px rgb(0 0 0 / 0.6);
+}
+.tier-bronze {
+  --metal: linear-gradient(135deg, #f0c09a, #c8854f 55%, #9a5f33);
+}
+.tier-silver {
+  --metal: linear-gradient(135deg, #f4f5f7, #c3c8d0 55%, #8f95a0);
+}
+.tier-gold {
+  --metal: linear-gradient(135deg, #f6e2a6, #d9b25e 55%, #b58a3a);
+  border-color: rgb(224 194 122 / 0.7);
+  background: linear-gradient(160deg, rgb(224 194 122 / 0.14), rgb(224 194 122 / 0.03));
+}
+@keyframes sheen {
+  0%,
+  70% {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+.tier-gold::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 236 180 / 0.14), transparent);
+  animation: sheen 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ---------- Testimoni: marquee (desktop) & carousel (mobile) ---------- */
+@keyframes marquee {
+  to {
+    transform: translateX(calc(-50% - 9px));
+  }
+}
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.marquee-track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: marquee 80s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ---------- Halaman legal ---------- */
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--gold-light), var(--gold-deep));
+  transform: scaleX(0);
+  pointer-events: none;
+}
+@supports (animation-timeline: scroll()) {
+  .read-progress {
+    animation: grow-x linear both;
+    animation-timeline: scroll(root);
+  }
+}
+.toc a[aria-current="true"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+.to-top {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 40;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: var(--gold);
+  border: 1px solid rgb(224 194 122 / 0.4);
+  box-shadow: 0 12px 28px -10px rgb(0 0 0 / 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+  cursor: pointer;
+}
+.to-top[data-show="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .float,
+  .orbit,
+  .tier-gold::after,
+  .marquee-track,
+  .read-progress {
+    animation: none !important;
+  }
+  .svc-card,
+  .svc-img img,
+  .dl-bar,
+  .to-top,
+  .mobile-menu,
+  .site-header {
+    transition: none !important;
+  }
+  .marquee {
+    overflow-x: auto;
+  }
+}
+
+/* ---------- Mobile: halaman lebih ringkas ---------- */
+@media (max-width: 639px) {
+  .sec-pad {
+    padding: 56px 0;
+  }
+  .phone:not(.phone-sm) {
+    width: 236px;
+    height: 498px;
+    border-radius: 40px;
+  }
+  .phone:not(.phone-sm) .screen {
+    border-radius: 32px;
+  }
+  .feature-row {
+    gap: 36px !important;
+  }
+  .hero-visual {
+    min-height: 560px !important;
+  }
+}
+@media (min-width: 640px) {
+  .mitra-phone .phone {
+    width: 250px;
+    height: 530px;
+  }
+}
+
+/* ---------- Skala C: section fitur (parallax ringan + cahaya gold) ---------- */
+.feature-glow {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  left: 50%;
+  top: 50%;
+  margin: -220px 0 0 -220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--glow, rgb(201 160 82 / 0.28)), transparent 65%);
+  pointer-events: none;
+}
+.dark .feature-glow {
+  --glow: rgb(224 194 122 / 0.2);
+}
+@keyframes parallax {
+  from {
+    transform: translateY(var(--px, 48px)) rotate(-2deg);
+  }
+  to {
+    transform: translateY(calc(-1 * var(--px, 48px))) rotate(1.5deg);
+  }
+}
+@supports (animation-timeline: view()) {
+  .parallax {
+    animation: parallax linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+@media (max-width: 639px) {
+  .parallax {
+    --px: 24px;
+  }
+  .feature-glow {
+    width: 340px;
+    height: 340px;
+    margin: -170px 0 0 -170px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parallax {
+    animation: none !important;
   }
 }

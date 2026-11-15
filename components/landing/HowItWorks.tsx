@@ -5,6 +5,7 @@ export function HowItWorks() {
   return (
     <section className="cream sec-pad">
       <div className="wrap flex flex-col gap-12">
+        <div className="reveal">
         <SectionHeading
           tone="light"
           eyebrow="Cara kerja"
@@ -13,6 +14,7 @@ export function HowItWorks() {
           gap={14}
           style={{ maxWidth: 620 }}
         />
+        </div>
         <ol
           className="m-0 grid list-none p-0"
           style={{ gap: 28, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
