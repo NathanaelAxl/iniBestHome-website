@@ -4,7 +4,7 @@ Semua item di bawah menunggu data atau keputusan dari pemilik. Cari di kode deng
 
 ## Link & konfigurasi
 
-- [ ] **App Store**: aplikasi iOS masih dalam pengembangan → tombol tampil "Segera hadir · Soon" (bukan link, `AppStoreSoon` di `components/ui/StoreButton.tsx`). Setelah rilis: isi `APP_STORE_URL` di `lib/config.ts` dan ganti `AppStoreSoon` dengan tombol link.
+- [x] **App Store** sudah diisi (`id6794550410`). Tombol App Store aktif; iOS diarahkan ke App Store lewat `/download`.
 - [ ] **Domain utama** → env `NEXT_PUBLIC_SITE_URL`. Dipakai untuk canonical, sitemap, dan OG image. (QR code dihapus atas permintaan.)
 - [ ] **Meta Pixel ID** → env `NEXT_PUBLIC_META_PIXEL_ID`. Kosong = Pixel tidak dimuat.
 - [x] Link Play Store sudah diisi (`com.jostarapp.bmsgym`, sudah dikonfirmasi).
@@ -14,9 +14,9 @@ Semua item di bawah menunggu data atau keputusan dari pemilik. Cari di kode deng
 
 - [x] Jawaban FAQ OTP & terapis terlambat diisi dari menu Keluhan & Saran di aplikasi; FAQ "cara menjadi mitra terapis" ditambahkan dari sumber yang sama.
 - [x] FAQ "kode promo" disamakan dengan teks di app.
-- [ ] Layar Forum di section Komunitas adalah **ilustrasi HTML** dengan contoh postingan (`components/landing/ForumScreen.tsx`), bukan screenshot asli. Ganti isinya dengan postingan asli bila perlu.
+- [ ] Layar Forum di kolase section Fitur adalah **ilustrasi HTML** dengan contoh postingan (`components/landing/ForumScreen.tsx`), bukan screenshot asli.
 - [ ] Screenshot asli langkah 3 & 4 hapus akun (sekarang ilustrasi HTML) → `app/delete-account/page.tsx`, simpan di `public/screens/`.
-- [ ] **Testimoni Forum masih data dummy** (`isPlaceholder: true` di `content/landing.ts`). Wajib diganti ulasan asli. Build production menampilkan peringatan selama masih ada.
+- [x] Section testimoni Forum dihapus atas permintaan (tidak ada lagi testimoni dummy di situs).
 - [ ] Trust strip "5.0 Rating layanan dari pelanggan" (`components/landing/TrustStrip.tsx`) — pastikan sesuai data asli. JSON-LD sengaja tidak memuat rating.
 
 ## Perlu dicek tim legal (copy disalin apa adanya dari desain)

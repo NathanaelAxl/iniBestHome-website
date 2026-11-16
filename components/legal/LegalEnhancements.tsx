@@ -38,7 +38,7 @@ export function LegalEnhancements() {
 
 /**
  * Daftar isi: sticky di desktop, bagian yang sedang dibaca di-highlight.
- * Tetap memakai <details> (collapsible di mobile) seperti di desain.
+ * Di mobile berupa <details> yang bisa dibuka-tutup.
  */
 export function Toc({ items, children }: { items: readonly (readonly [string, string])[]; children: React.ReactNode }) {
   const [active, setActive] = useState(items[0]?.[0]);
@@ -47,7 +47,9 @@ export function Toc({ items, children }: { items: readonly (readonly [string, st
     const sections = items.map(([id]) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
     const io = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         if (visible[0]) setActive(visible[0].target.id);
       },
       { rootMargin: "-100px 0px -55% 0px" },
@@ -57,16 +59,12 @@ export function Toc({ items, children }: { items: readonly (readonly [string, st
   }, [items]);
 
   return (
-    <aside className="min-w-0 lg:sticky lg:top-24 lg:self-start" style={{ flex: "1 1 260px" }}>
-      <details
-        open
-        style={{ background: "#fff", border: "1px solid var(--line-2)", borderRadius: 22, padding: "22px 26px" }}
-      >
+    <aside className="doc-toc">
+      <details open>
         {children}
         <nav className="toc flex flex-col" aria-label="Daftar isi">
-          {items.map(([id, label], i) => (
+          {items.map(([id, label]) => (
             <a key={id} href={`#${id}`} aria-current={active === id ? "true" : undefined}>
-              <span>{i + 1}</span>
               {label}
             </a>
           ))}

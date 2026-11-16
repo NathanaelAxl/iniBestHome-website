@@ -12,8 +12,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/\/$/, 
 export const PLAY_STORE_URL =
   "https://play.google.com/store/apps/details?id=com.jostarapp.bmsgym";
 
-// TODO: ganti link App Store. Selama kosong, pengguna iOS diarahkan ke /#download.
-export const APP_STORE_URL = "";
+export const APP_STORE_URL = "https://apps.apple.com/id/app/ini-best-home-service/id6794550410";
 
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID ?? "";
 
@@ -30,7 +29,7 @@ export function waLink(number: string, text?: string) {
   return `https://wa.me/${number}${text ? `?text=${encodeURIComponent(text)}` : ""}`;
 }
 
-export type DownloadPosition = "hero" | "services" | "mitra" | "cta" | "sticky" | "footer";
+export type DownloadPosition = "hero" | "services" | "features" | "mitra" | "cta" | "sticky" | "footer";
 export type Store = "play" | "appstore";
 
 /** Semua tombol download lewat /download (app/download/route.ts) supaya UTM tercatat. */

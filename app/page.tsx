@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { DownloadCta } from "@/components/landing/DownloadCta";
 import { Faq } from "@/components/landing/Faq";
-import { Features } from "@/components/landing/Features";
+import { FeatureShowcase } from "@/components/landing/FeatureShowcase";
 import { Hero } from "@/components/landing/Hero";
 import { HowItWorks } from "@/components/landing/HowItWorks";
 import { Membership } from "@/components/landing/Membership";
 import { Mitra } from "@/components/landing/Mitra";
 import { Services } from "@/components/landing/Services";
-import { Testimonials } from "@/components/landing/Testimonials";
 import { TrustStrip } from "@/components/landing/TrustStrip";
 import { MobileDownloadBar } from "@/components/landing/MobileDownloadBar";
 import { LandingFooter } from "@/components/layout/Footer";
@@ -81,10 +80,9 @@ export default function Home() {
         <Hero />
         <TrustStrip />
         <Services />
-        <Features />
-        <Membership />
+        <FeatureShowcase />
         <HowItWorks />
-        <Testimonials />
+        <Membership />
         <Mitra />
         <Faq />
         <DownloadCta />

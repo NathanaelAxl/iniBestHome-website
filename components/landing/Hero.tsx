@@ -1,8 +1,6 @@
 import { PhoneMockup } from "@/components/ui/PhoneMockup";
 import { Diamond, Dot, Ring } from "@/components/ui/Rings";
-import { Sticker, StickerIcon } from "@/components/ui/Sticker";
 import { StoreButtons } from "@/components/ui/StoreButton";
-import { CheckIcon } from "@/components/ui/icons";
 
 export function Hero() {
   return (
@@ -44,30 +42,7 @@ export function Hero() {
             <Dot style={{ right: "16%", top: "9%" }} />
             <Dot style={{ left: "22%", bottom: "7%", width: 8, height: 8, opacity: 0.7 }} />
           </div>
-
-          {/* HP belakang (miring) + HP depan (splash) */}
-          <div className="phone-back" aria-hidden>
-            <PhoneMockup src="/screens/body-massage.jpg" alt="" />
-          </div>
           <PhoneMockup src="/screens/splash.jpg" alt="Layar pembuka aplikasi INI Best Home" priority />
-
-          <Sticker tilt={3} float style={{ right: "-2%", top: "30%" }}>
-            <StickerIcon bg="linear-gradient(135deg,#ECD394,#A47A2E)">
-              <CheckIcon size={16} className="text-ink" />
-            </StickerIcon>
-            <span>
-              Terapis Terverifikasi<small>Aman &amp; profesional</small>
-            </span>
-          </Sticker>
-          <Sticker
-            variant="gold"
-            tilt={-3}
-            float
-            floatDelay
-            style={{ left: "-2%", bottom: "14%", borderRadius: 999, padding: "14px 24px" }}
-          >
-            Booking dalam 1 menit
-          </Sticker>
         </div>
       </div>
     </section>
