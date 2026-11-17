@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUp } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /** Progress bar baca (CSS scroll-driven) + tombol kembali ke atas. */
 export function LegalEnhancements() {
@@ -42,6 +42,21 @@ export function LegalEnhancements() {
  */
 export function Toc({ items, children }: { items: readonly (readonly [string, string])[]; children: React.ReactNode }) {
   const [active, setActive] = useState(items[0]?.[0]);
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+  const desktop = () => window.matchMedia("(min-width: 1024px)").matches;
+
+  // Desktop: selalu terbuka di samping. Mobile: tertutup, bisa dibuka lewat "Daftar isi".
+  useEffect(() => {
+    const d = detailsRef.current;
+    if (!d) return;
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const sync = () => {
+      d.open = mq.matches;
+    };
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     const sections = items.map(([id]) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
@@ -60,11 +75,19 @@ export function Toc({ items, children }: { items: readonly (readonly [string, st
 
   return (
     <aside className="doc-toc">
-      <details open>
+      <details ref={detailsRef}>
         {children}
         <nav className="toc flex flex-col" aria-label="Daftar isi">
           {items.map(([id, label]) => (
-            <a key={id} href={`#${id}`} aria-current={active === id ? "true" : undefined}>
+            <a
+              key={id}
+              href={`#${id}`}
+              aria-current={active === id ? "true" : undefined}
+              onClick={() => {
+                // Di mobile, tutup daftar isi setelah memilih bagian
+                if (!desktop() && detailsRef.current) detailsRef.current.open = false;
+              }}
+            >
               {label}
             </a>
           ))}

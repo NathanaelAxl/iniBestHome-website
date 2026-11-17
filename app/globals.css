@@ -246,6 +246,21 @@ button:focus-visible {
   color: var(--muted-dark);
   line-height: 1.2;
 }
+/* HP sempit: tombol Google Play & App Store tetap sebaris */
+@media (max-width: 420px) {
+  .store {
+    gap: 9px;
+    min-height: 52px;
+    padding: 0 14px 0 12px;
+  }
+  .store svg {
+    width: 20px;
+    height: 20px;
+  }
+  .store b {
+    font-size: 15px !important;
+  }
+}
 .store b {
   display: block;
   font-size: 17px;
@@ -1163,7 +1178,15 @@ details[open] .chev-flip {
 }
 .doc-grid {
   display: grid;
+  /* minmax(0,1fr): kolom tidak boleh melebar melebihi layar karena tabel/teks panjang */
+  grid-template-columns: minmax(0, 1fr);
   gap: 32px;
+}
+.doc-grid > * {
+  min-width: 0;
+}
+.doc {
+  overflow-wrap: anywhere;
 }
 @media (min-width: 1024px) {
   .doc-grid {
@@ -1180,23 +1203,53 @@ details[open] .chev-flip {
     pointer-events: none;
   }
 }
+/* Mobile: daftar isi berupa kotak yang bisa dibuka-tutup */
 .doc-toc details {
-  border-bottom: 1px solid var(--line);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  padding: 0 16px;
+}
+.doc-toc details[open] {
   padding-bottom: 12px;
 }
-@media (min-width: 1024px) {
-  .doc-toc details {
-    border-bottom: 0;
-    padding-bottom: 0;
-  }
-}
 .doc-toc-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--muted-light);
-  padding: 6px 0 10px;
+}
+.doc-toc-summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--gold-deep);
+  border-bottom: 2px solid var(--gold-deep);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.2s;
+}
+.doc-toc details[open] .doc-toc-summary::after {
+  transform: rotate(-135deg) translateY(-2px);
+}
+@media (min-width: 1024px) {
+  .doc-toc details {
+    border: 0;
+    border-radius: 0;
+    background: none;
+    padding: 0;
+  }
+  .doc-toc-summary {
+    min-height: 0;
+    padding: 6px 0 10px;
+  }
+  .doc-toc-summary::after {
+    display: none;
+  }
 }
 .doc-toc .toc a {
   display: block;
@@ -1314,11 +1367,20 @@ details[open] .chev-flip {
   overflow-x: auto;
   margin: 6px 0 14px;
 }
+/* Tabel 2 kolom: selalu pas lebar layar (tanpa min-width), teks membungkus */
 .doc-table {
   width: 100%;
-  min-width: 420px;
   border-collapse: collapse;
   font-size: 15px;
+}
+@media (max-width: 639px) {
+  .doc-table {
+    font-size: 14px;
+  }
+  .doc-table th,
+  .doc-table td {
+    padding-right: 10px !important;
+  }
 }
 .doc-table th,
 .doc-table td {
